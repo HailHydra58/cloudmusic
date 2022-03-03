@@ -1,106 +1,107 @@
 <template>
-	<div class="bg">
+	<!-- 顶部 -->
+	<div class="topS" :class="{topSS: isShowTop}">
 		<NavBar>
 			<template v-slot:left>
-				<svg @click="$router.go(-1)" class="icon" aria-hidden="true">
+				<svg @click="$router.go(-1)" class="icon" :class="{icons: isShowTop}" aria-hidden="true">
 					<use xlink:href="#icon-fanhui"></use>
 				</svg>
 			</template>
 			<template v-slot:center></template>
 			<template v-slot:right>
-				<svg class="icon" aria-hidden="true">
+				<svg class="icon" :class="{icons: isShowTop}" aria-hidden="true">
 					<use xlink:href="#icon-gengduo1"></use>
 				</svg>
 			</template>
 		</NavBar>
-		<!-- 背景图 -->
-		<img class="imgBg" :src="imgBackground" />
-		
-		<Scroll class="content">
-			<div>
-				<!-- 背景图 -->
-				<img class="imgBg1" :src="imgBackground" />
-				<div class="userDetail">
-					<!-- 用户信息1 -->
-					<div class="userDetail_1">
-						<!-- 头像 -->
-						<div class="imgFace">
-							<img class="imgFace1" :src="imgFace" />
-						</div>
-						<!-- 名字 -->
-						<div class="userName">{{user.userName}}</div>
-						<div class="user_2">
-							<span>{{newFollows}} 关注</span>
-							<span>{{followeds}} 粉丝</span>
-							<span>Lv.{{level}}</span>
-						</div>
-						<div class="user_3">
-							<span>四川 乐山</span>
-							<span>村龄{{parseInt(createDays/365)}}年</span>
-						</div>
-						<div class="user_4">
-							<van-button class="editor" round size="small" @click="clickEditor">编辑资料</van-button>
-							<span>
-								<svg @click="isIconChange = !isIconChange" class="icon1" :class="{isIconChange: isIconChange}" aria-hidden="true">
-									<use xlink:href="#icon-xiajiantou-copy"></use>
-								</svg>
-							</span>
-						</div>
+	</div>
+	<!-- 背景图1不动或者往上显示 -->
+	<img class="imgBg" :src="imgBackground" v-show="!isShowBgImg" />
+	<!-- 内容 -->
+	<Scroll class="content" :probe-type="3" @scroll="contentScroll">
+		<div>
+			<!-- 背景图2往下动显示 -->
+			<img class="imgBg1" :src="imgBackground" v-show="isShowBgImg" />
+			<div ref="userDetails" class="userDetail">
+				<!-- 用户信息1 -->
+				<div class="userDetail_1">
+					<!-- 头像 -->
+					<div class="imgFace">
+						<img class="imgFace1" :src="imgFace" />
 					</div>
-					
-					<!-- 用户信息2 -->
-					<div class="userDetail_2">
-						<!-- 选择主页 -->
-						<div class="userDetail_2_1">
-							<span v-for="(item,index) in zyDtBk">{{item}}</span>
+					<!-- 名字 -->
+					<div class="userName">{{user.userName}}</div>
+					<div class="user_2">
+						<span>{{newFollows}} 关注</span>
+						<span>{{followeds}} 粉丝</span>
+						<span>Lv.{{level}}</span>
+					</div>
+					<div class="user_3">
+						<span>四川 乐山</span>
+						<span>村龄{{parseInt(createDays/365)}}年</span>
+					</div>
+					<div class="user_4">
+						<van-button class="editor" round size="small" @click="clickEditor">编辑资料</van-button>
+						<span>
+							<svg @click="isIconChange = !isIconChange" class="icon1" :class="{isIconChange: isIconChange}" aria-hidden="true">
+								<use xlink:href="#icon-xiajiantou-copy"></use>
+							</svg>
+						</span>
+					</div>
+				</div>
+				
+				<!-- 用户信息2 -->
+				<div class="userDetail_2">
+					<!-- 选择主页 -->
+					<div class="userDetail_2_1">
+						<span v-for="(item,index) in zyDtBk">{{item}}</span>
+					</div>
+					<!-- 基本信息 -->
+					<div class="userDetail_2_2">
+						<div class="h1">
+							<span>基本信息</span>
+							<span>村民证</span>
 						</div>
-						<!-- 基本信息 -->
-						<div class="userDetail_2_2">
-							<div class="h1">
-								<span>基本信息</span>
-								<span>村民证</span>
-							</div>
-							<div class="detailMe detailMe_1">村龄: {{parseInt(createDays/365)}}年 ({{2018}}年{{12}}月注册)</div>
-							<div class="detailMe">地区: 四川 乐山</div>
-						</div>
-						<!-- 音乐品味 -->
-						<div class="musciTaste">
-							<div class="h1">音乐品位</div>
-							<!-- 第一行 -->
-							<MusicMeChild>
-								<template v-slot:left><img class="imgSmall" :src="playList[0].coverImgUrl" /></template>
-								<template v-slot:center_1>听歌排行</template>
-								<template v-slot:center_2>累计听歌{{5337}}首</template>
-							</MusicMeChild>
-							<!-- 第二行 -->
-							<MusicMeChild>
-								<template v-slot:left><img src="../../assets/weibo.png" /></template>
-								<template v-slot:center_1>我喜欢的音乐</template>
-								<template v-slot:center_2>{{227}}首, 播放{{6983}}次</template>
-							</MusicMeChild>
-							<MusicMeChild>
-								<template v-slot:left><img src="../../assets/weibo.png" /></template>
-								<template v-slot:center_1>我喜欢的音乐</template>
-								<template v-slot:center_2>{{227}}首, 播放{{6983}}次</template>
-							</MusicMeChild><MusicMeChild>
-								<template v-slot:left><img src="../../assets/weibo.png" /></template>
-								<template v-slot:center_1>我喜欢的音乐</template>
-								<template v-slot:center_2>{{227}}首, 播放{{6983}}次</template>
-							</MusicMeChild><MusicMeChild>
-								<template v-slot:left><img src="../../assets/weibo.png" /></template>
-								<template v-slot:center_1>我喜欢的音乐</template>
-								<template v-slot:center_2>{{227}}首, 播放{{6983}}次</template>
-							</MusicMeChild><MusicMeChild>
-								<template v-slot:left><img src="../../assets/weibo.png" /></template>
-								<template v-slot:center_1>我喜欢的音乐</template>
-								<template v-slot:center_2>{{227}}首, 播放{{6983}}次</template>
-							</MusicMeChild>
-						</div>
+						<div class="detailMe detailMe_1">村龄: {{parseInt(createDays/365)}}年 ({{2018}}年{{12}}月注册)</div>
+						<div class="detailMe">地区: 四川 乐山</div>
+					</div>
+					<!-- 音乐品味 -->
+					<div class="musciTaste">
+						<div class="h1">音乐品位</div>
+						<!-- 第一行 -->
+						<MusicMeChild>
+							<template v-slot:left><img class="imgSmall" :src="playList[0].coverImgUrl" /></template>
+							<template v-slot:center_1>听歌排行</template>
+							<template v-slot:center_2>累计听歌{{5337}}首</template>
+						</MusicMeChild>
+						<!-- 第二行 -->
+						<MusicMeChild>
+							<template v-slot:left><img src="../../assets/weibo.png" /></template>
+							<template v-slot:center_1>我喜欢的音乐</template>
+							<template v-slot:center_2>{{227}}首, 播放{{6983}}次</template>
+						</MusicMeChild>
+						<MusicMeChild>
+							<template v-slot:left><img src="../../assets/weibo.png" /></template>
+							<template v-slot:center_1>我喜欢的音乐</template>
+							<template v-slot:center_2>{{227}}首, 播放{{6983}}次</template>
+						</MusicMeChild><MusicMeChild>
+							<template v-slot:left><img src="../../assets/weibo.png" /></template>
+							<template v-slot:center_1>我喜欢的音乐</template>
+							<template v-slot:center_2>{{227}}首, 播放{{6983}}次</template>
+						</MusicMeChild><MusicMeChild>
+							<template v-slot:left><img src="../../assets/weibo.png" /></template>
+							<template v-slot:center_1>我喜欢的音乐</template>
+							<template v-slot:center_2>{{227}}首, 播放{{6983}}次</template>
+						</MusicMeChild><MusicMeChild>
+							<template v-slot:left><img src="../../assets/weibo.png" /></template>
+							<template v-slot:center_1>我喜欢的音乐</template>
+							<template v-slot:center_2>{{227}}首, 播放{{6983}}次</template>
+						</MusicMeChild>
 					</div>
 				</div>
 			</div>
-		</Scroll>
-	</div>
+		</div>
+	</Scroll>
 </template>
 
 <script>
@@ -159,11 +160,26 @@
 			
 			const zyDtBk = ['主页','动态','播客']
 			
+			// 显示背景图片
+			const isShowBgImg = ref(false)
+			//显示Top
+			const isShowTop = ref(false)
+			const userDetails = ref()
+			//bestScroll传过来的实时y轴
+			function contentScroll(position) {
+				isShowBgImg.value = position.y < 0
+				isShowTop.value = (-position.y) > (userDetails.value.offsetTop - 44)
+			}
+			
 			return {
 				...toRefs(userDetail),
 				clickEditor,
 				isIconChange,
-				zyDtBk
+				zyDtBk,
+				contentScroll,
+				isShowBgImg,
+				isShowTop,
+				userDetails
 			}
 		},
 		computed: {
@@ -177,7 +193,7 @@
 <style scoped>
 	.content {
 		width: 100%;
-		height: calc(100vh - 44px);
+		height: calc(100vh - 50px);
 	}
 	
 	.icon {
@@ -188,6 +204,10 @@
 		fill: currentColor;
 		overflow: hidden;
 		fill: #ffffff;	/* 改其颜色 */
+	}
+	
+	.icons {
+		fill:#000000
 	}
 	
 	.icon1 {
@@ -207,13 +227,9 @@
 	}
 	
 	.bg {
-		position: fixed;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 10;
+		/* z-index: 10; */
 		/* 层级10 */
+		background-color: #000000;
 	}
 	
 	.h1 {
@@ -228,17 +244,16 @@
 	}
 	
 	.imgBg {
-		position: absolute;
+		position: fixed;
 		top: 0;
 		left: 0;
 		width: 100%;
 		height: auto;
-		z-index: -1;
 	}
 	
 	.imgBg1 {
 		position: absolute;
-		top: -44px;
+		top: 0;
 		left: 0;
 		width: 100%;
 		height: auto;
@@ -263,7 +278,7 @@
 		width: 100%;
 		height: calc(100vh + 300px);
 		position: relative;
-		top: 180px;
+		top: 225px;
 		margin-left: auto;
 		margin-right: auto;
 		background-color: #f1f1f1;
@@ -368,5 +383,17 @@
 	.detailMe_1 {
 		padding-top: 8px;
 		padding-bottom: 4px;
+	}
+	
+	.topS {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		z-index: 99;
+	}
+	
+	.topSS {
+		background-color: #eeeeee;
 	}
 </style>
