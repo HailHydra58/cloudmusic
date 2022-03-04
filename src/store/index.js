@@ -11,7 +11,7 @@ export default createStore({
 		user: {	//用户信息状态等
 			isLogin: false,
 			userName: "未登录",
-			userId: null
+			userId: 1709486043
 		}
   },
   mutations: {
