@@ -4,7 +4,7 @@
     <NavBar>
       <template v-slot:left>
         <svg
-          @click="$router.go('-1')"
+          @click="$router.push('/find')"
           class="icon"
           :class="{ icons: isShowTop }"
           aria-hidden="true"
@@ -151,113 +151,24 @@
           <!-- 音乐品味 -->
           <div class="musciTaste">
             <div class="h1">音乐品位</div>
-            <!-- 第一行 -->
-            <MusicMeChild>
-              <template v-slot:left
-                ><img class="imgSmall" :src="playList[0]?.coverImgUrl"
-              /></template>
-              <template v-slot:center_1>听歌排行</template>
-              <template v-slot:center_2>累计听歌{{ 5337 }}首</template>
-            </MusicMeChild>
-            <!-- 第二行 -->
-            <MusicMeChild>
-              <template v-slot:left
-                ><img style="width: 30px" v-lazy="playList[1]?.coverImgUrl"
-              /></template>
-              <template v-slot:center_1>我喜欢的音乐</template>
-              <template v-slot:center_2>{{ 227 }}首, 播放{{ 6983 }}次</template>
-            </MusicMeChild>
-            <MusicMeChild>
-              <template v-slot:left
-                ><img style="width: 30px" v-lazy="playList[2]?.coverImgUrl"
-              /></template>
-              <template v-slot:center_1>我喜欢的音乐</template>
-              <template v-slot:center_2>{{ 227 }}首, 播放{{ 6983 }}次</template>
-            </MusicMeChild>
-            <MusicMeChild>
-              <template v-slot:left
-                ><img style="width: 30px" v-lazy="playList[109]?.coverImgUrl"
-              /></template>
-              <template v-slot:center_1>我喜欢的音乐</template>
-              <template v-slot:center_2>{{ 227 }}首, 播放{{ 6983 }}次</template>
-            </MusicMeChild>
-            <MusicMeChild>
-              <template v-slot:left
-                ><img style="width: 30px" v-lazy="playList[109]?.coverImgUrl"
-              /></template>
-              <template v-slot:center_1>我喜欢的音乐</template>
-              <template v-slot:center_2>{{ 227 }}首, 播放{{ 6983 }}次</template>
-            </MusicMeChild>
-            <MusicMeChild>
-              <template v-slot:left
-                ><img style="width: 30px" v-lazy="playList[109]?.coverImgUrl"
-              /></template>
-              <template v-slot:center_1>我喜欢的音乐</template>
-              <template v-slot:center_2>{{ 227 }}首, 播放{{ 6983 }}次</template>
-            </MusicMeChild>
-            <MusicMeChild>
-              <template v-slot:left
-                ><img style="width: 30px" v-lazy="playList[109]?.coverImgUrl"
-              /></template>
-              <template v-slot:center_1>我喜欢的音乐</template>
-              <template v-slot:center_2>{{ 227 }}首, 播放{{ 6983 }}次</template>
-            </MusicMeChild>
-            <MusicMeChild>
-              <template v-slot:left
-                ><img style="width: 30px" v-lazy="playList[109]?.coverImgUrl"
-              /></template>
-              <template v-slot:center_1>我喜欢的音乐</template>
-              <template v-slot:center_2>{{ 227 }}首, 播放{{ 6983 }}次</template>
-            </MusicMeChild>
-            <MusicMeChild>
-              <template v-slot:left
-                ><img style="width: 30px" v-lazy="playList[109]?.coverImgUrl"
-              /></template>
-              <template v-slot:center_1>我喜欢的音乐</template>
-              <template v-slot:center_2>{{ 227 }}首, 播放{{ 6983 }}次</template>
-            </MusicMeChild>
-            <MusicMeChild>
-              <template v-slot:left
-                ><img style="width: 30px" v-lazy="playList[109]?.coverImgUrl"
-              /></template>
-              <template v-slot:center_1>我喜欢的音乐</template>
-              <template v-slot:center_2>{{ 227 }}首, 播放{{ 6983 }}次</template>
-            </MusicMeChild>
-            <MusicMeChild>
-              <template v-slot:left
-                ><img style="width: 30px" v-lazy="playList[109]?.coverImgUrl"
-              /></template>
-              <template v-slot:center_1>我喜欢的音乐</template>
-              <template v-slot:center_2>{{ 227 }}首, 播放{{ 6983 }}次</template>
-            </MusicMeChild>
-            <MusicMeChild>
-              <template v-slot:left
-                ><img style="width: 30px" v-lazy="playList[109]?.coverImgUrl"
-              /></template>
-              <template v-slot:center_1>我喜欢的音乐</template>
-              <template v-slot:center_2>{{ 227 }}首, 播放{{ 6983 }}次</template>
-            </MusicMeChild>
-            <MusicMeChild>
-              <template v-slot:left
-                ><img style="width: 30px" v-lazy="playList[109]?.coverImgUrl"
-              /></template>
-              <template v-slot:center_1>我喜欢的音乐</template>
-              <template v-slot:center_2>{{ 227 }}首, 播放{{ 6983 }}次</template>
-            </MusicMeChild>
-            <MusicMeChild>
-              <template v-slot:left
-                ><img style="width: 30px" v-lazy="playList[109]?.coverImgUrl"
-              /></template>
-              <template v-slot:center_1>我喜欢的音乐</template>
-              <template v-slot:center_2>{{ 227 }}首, 播放{{ 6983 }}次</template>
-            </MusicMeChild>
-            <MusicMeChild>
-              <template v-slot:left
-                ><img style="width: 30px" v-lazy="playList[109]?.coverImgUrl"
-              /></template>
-              <template v-slot:center_1>我喜欢的音乐</template>
-              <template v-slot:center_2>{{ 227 }}首, 播放{{ 6983 }}次</template>
-            </MusicMeChild>
+
+            <router-link
+              :to="{ path: '/musiclist', query: { id: item.id } }"
+              v-for="(item, index) in playList"
+              style="color: #000000"
+            >
+              <MusicMeChild class="bottomPadding">
+                <template v-slot:left>
+                  <img class="imgSmall" :src="item?.coverImgUrl" />
+                </template>
+                <template v-slot:center_1>{{ item?.name }}</template>
+                <template v-slot:center_2
+                  >{{ item?.trackCount }}首 播放{{
+                    item?.playCount
+                  }}次</template
+                >
+              </MusicMeChild>
+            </router-link>
           </div>
         </div>
       </div>
@@ -314,7 +225,7 @@ export default {
     getPlaylist(store.state.user.userId).then((res) => {
       nextTick(() => {
         userDetail.playList = res.data.playlist;
-        console.log(userDetail.playList);
+        // console.log(userDetail.playList);
       });
     });
 
@@ -456,11 +367,13 @@ export default {
 
 .userDetail {
   width: 100%;
-  height: calc(100vh + 300px);
+  /* height: calc(100vh + 300px); */
+  height: auto;
   position: relative;
   top: 225px;
   margin-left: auto;
   margin-right: auto;
+  padding-bottom: 220px;
   background-color: #f1f1f1;
 }
 
@@ -606,5 +519,9 @@ export default {
   padding-left: 15px;
   padding-right: 5px;
   display: flex;
+}
+
+.bottomPadding {
+  padding-bottom: 5px;
 }
 </style>

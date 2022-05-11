@@ -247,7 +247,7 @@
                 </div>
               </section>
             </div>
-            <div class="_1ZyEREpu" v-show="isPassword">
+            <div class="_1ZyEREpu" v-show="isCaptcha">
               <span class="_2bAJd11a">手机号或密码错误</span>
             </div>
             <button
@@ -560,16 +560,22 @@ export default {
     const store = useStore();
     const router = useRouter();
     const submit = () => {
-      postCellPhone(phone.value, password.value).then((res) => {
-        // console.log(res.data)
-        //判断是否登录,登录则跳转me界面
-        if (res.data.code == 200) {
-          store.state.user.isLogin = true;
-          store.state.user.userName = res.data.profile.nickname;
-          store.state.user.userId = res.data.profile.userId;
-          router.push("/me");
-        }
-      });
+      postCellPhone(phone.value, password.value)
+        .then((res) => {
+          // console.log(res.data);
+          //判断是否登录,登录则跳转me界面
+          if (res.data.code == 200) {
+            store.state.user.isLogin = true;
+            store.state.user.userName = res.data.profile.nickname;
+            store.state.user.userId = res.data.profile.userId;
+            router.push("/me");
+          } else {
+            isCaptcha.value = true;
+          }
+        })
+        .catch((err) => {
+          isCaptcha.value = true;
+        });
     };
     const isCaptcha = ref(false); //验证码错误是否显示
     const sentPhone = () => {
